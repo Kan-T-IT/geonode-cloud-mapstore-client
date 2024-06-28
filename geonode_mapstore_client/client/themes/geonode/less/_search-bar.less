@@ -1,0 +1,87 @@
+/*
+ * Copyright 2020, GeoSolutions Sas.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// **************
+// Theme
+// **************
+
+#gn-components-theme(@theme-vars) {
+    .gn-search-bar {
+        .color-var(@theme-vars[main-color]);
+        .background-color-var(@theme-vars[main-bg]);
+        .border-color-var(@theme-vars[main-border-color]);
+        &.focus {
+            .outline-color-var(@theme-vars[focus-color]);
+        }
+        .gn-suggestions {
+            .color-var(@theme-vars[main-color]);
+            .background-color-var(@theme-vars[main-bg]);
+        }
+    }
+}
+
+// **************
+// Layout
+// **************
+
+.gn-search-bar {
+    .shadow-sm;
+    position: relative;
+    width: 100%;
+    z-index: 20;
+    border-width: 2px;
+    border-style: solid;
+    min-width: 100px;
+    .input-group {
+        display: flex;
+    }
+    .input-group-append,
+    .input-group-prepend {
+        display: flex;
+        align-items: center;
+    }
+    .input-group-append {
+        padding: 0 0.25rem;
+    }
+    &.focus {
+        outline-width: 3px;
+        outline-style: solid;
+    }
+    .form-control {
+        border: none;
+        height: auto;
+    }
+    .input-group-addon {
+        padding: 0;
+        background-color: transparent;
+        border: none;
+    }
+    .gn-suggestions {
+        font-size: @font-size-base;
+        .shadow-lg;
+        position: absolute;
+        width: 100%;
+        margin-top: 0.5rem;
+        .gn-suggestions-header {
+            display: flex;
+            flex-direction: row-reverse;
+        }
+        .list-group {
+            overflow-y: auto;
+            max-height: 300px;
+            margin-bottom: 0;
+        }
+    }
+
+}
+
+@media screen and (min-width: 768px) {
+    .gn-search-bar {
+        min-width: 500px;
+    }
+}

@@ -1,0 +1,246 @@
+{% load client_lib_tags %}
+{% load base_tags %}
+{% load get_menu_json %}
+{% load apikey %}
+{% comment %}
+    app and map configuration need to be normalized
+{% endcomment %}
+
+{% comment %} setting.py variables {% endcomment %}
+{{GEONODE_SETTINGS|json_script:"GEONODE_SETTINGS" }}
+
+{% comment %} menu items {% endcomment %}
+
+{% get_menu_json 'CARDS_MENU' as CARDS_MENU %}
+{{ CARDS_MENU|json_script:"menu-CARDS_MENU" }}
+{% generate_proxyurl PROXY_URL|default:"/proxy/?url=" request as UPDATED_PROXY_URL %}
+{% retrieve_apikey request as user_apikey %}
+
+{% mapbox_access_token as MAPBOX_ACCESS_TOKEN %}
+
+<script>
+    (function(){
+
+        function checkBoolean(value) {
+            if (value === 'true') {
+                return true;
+            }
+            if (value === 'false') {
+                return false;
+            }
+            return value;
+        }
+        function getJSONScriptVariable(id, fallback) {
+            const node = document.getElementById(id);
+            return checkBoolean(node && JSON.parse(node.textContent) || fallback);
+        }
+
+        localStorage.setItem('showPopoverSync', false);
+
+        const cardsMenuItems = getJSONScriptVariable('menu-CARDS_MENU', []);
+        const geoNodeSettings = getJSONScriptVariable('GEONODE_SETTINGS', {});
+
+        const baseLayers = geoNodeSettings.MAP_BASELAYERS || [];
+        const baseLayersSources = geoNodeSettings.MAP_BASELAYERS_SOURCES || {};
+        const defaultMapCRS = geoNodeSettings.DEFAULT_MAP_CRS || 'EPSG:3857';
+        const defaultMapCenterX = geoNodeSettings.DEFAULT_MAP_CENTER_X || 0;
+        const defaultMapCenterY = geoNodeSettings.DEFAULT_MAP_CENTER_Y || 0;
+        const defaultMapZoom = geoNodeSettings.DEFAULT_MAP_ZOOM || 0;
+        const defaultTileSize = geoNodeSettings.DEFAULT_TILE_SIZE || 512;
+        const defaultThumbnailSize = geoNodeSettings.DEFAULT_THUMBNAIL_SIZE || {'width': 500, 'height': 200};
+        const datasetMaxUploadSize = geoNodeSettings.DATASET_MAX_UPLOAD_SIZE;
+        const documentMaxUploadSize = geoNodeSettings.DOCUMENT_MAX_UPLOAD_SIZE;
+        const maxParallelUploads = geoNodeSettings.MAX_PARALLEL_UPLOADS
+        const defaultLayerFormat = geoNodeSettings.DEFAULT_LAYER_FORMAT || 'image/png';
+        const catalogueServices = geoNodeSettings.CATALOGUE_SERVICES || {};
+        const catalogueSelectedService = geoNodeSettings.CATALOGUE_SELECTED_SERVICE || '';
+        const createLayer = geoNodeSettings.CREATE_LAYER || false
+        const timeEnabled = geoNodeSettings.TIME_ENABLED || false;
+        const allowedDocumentTypes = geoNodeSettings.ALLOWED_DOCUMENT_TYPES || [];
+        const languages = geoNodeSettings.LANGUAGES;
+        const projectionDefs = geoNodeSettings.PROJECTION_DEFS || [];
+        const pluginsConfigPatchRules  = geoNodeSettings.PLUGINS_CONFIG_PATCH_RULES || [];
+        const translationsPath = geoNodeSettings.TRANSLATIONS_PATH;
+        const extensionsFolder = geoNodeSettings.EXTENSIONS_FOLDER_PATH;
+        const supportedDatasetFileTypes = geoNodeSettings.SUPPORTED_DATASET_FILE_TYPES;
+        const customFilters = geoNodeSettings.CUSTOM_FILTERS || {
+            "my-resources": {
+                "filter{owner.pk}": "{state('user') && state('user').pk}"
+            },
+            "favorite": {
+                "favorite": true
+            },
+            "featured": {
+                "filter{featured}": true
+            },
+            "unpublished": {
+                "filter{is_published}": false
+            },
+            "pending-approval": {
+                "filter{is_approved}": false
+            },
+            "dataset": {
+                "filter{resource_type.in}": "dataset"
+            },
+            "store-vector": {
+                "filter{subtype.in}": "vector"
+            },
+            "store-raster": {
+                "filter{subtype.in}": "raster"
+            },
+            "store-remote": {
+                "filter{subtype.in}": "remote"
+            },
+            "store-time-series": {
+                "filter{subtype.in}": "vector_time"
+            },
+            "document": {
+                "filter{resource_type.in}": "document"
+            },
+            "map": {
+                "filter{resource_type.in}": "map"
+            },
+            "geostory": {
+                "filter{resource_type.in}": "geostory"
+            },
+            "dashboard": {
+                "filter{resource_type.in}": "dashboard"
+            }
+        };
+
+        const isEmbed = checkBoolean('{{ is_embed }}') || false;
+        const pluginsConfigKey = '{{ plugins_config_key }}';
+        const siteUrl = '{{ SITEURL }}' || '';
+        const siteName = '{{ SITE_NAME }}' || 'Geonode';
+        const geoServerPublicLocation = '{{ GEOSERVER_PUBLIC_LOCATION }}' || '';
+        const isMobile = '{{ request.user_agent.is_mobile }}' === 'True' ? true : false;
+
+        window.__GEONODE_CONFIG__ = {
+            languageCode: '{{ LANGUAGE_CODE }}',
+            languages: languages,
+            translationsPath: translationsPath,
+            resourceId: '{{ resource.pk|default:"" }}',
+            resourceType: '{{ resource.resource_type|default:"" }}',
+            isEmbed: isEmbed,
+            pluginsConfigKey: pluginsConfigKey,
+            pluginsConfigPatchRules: pluginsConfigPatchRules,
+            apikey: '{%if user_apikey %}{{user_apikey}}{% else %}{% endif %}',
+            localConfig: {
+                proxyUrl: {
+                    url: '{{UPDATED_PROXY_URL|safe }}',
+                    useCORS: []
+                },
+                useAuthenticationRules: true,
+                authenticationRules: [
+                    {
+                        urlPattern: '.*geoserver.*',
+                        authkeyParamName: 'access_token',
+                        method: 'authkey'
+                    },
+                    {
+                        urlPattern: '.*gs.*',
+                        authkeyParamName: 'access_token',
+                        method: 'authkey'
+                    },
+                    {
+                        urlPattern: '.*api/v2.*',
+                        method: 'bearer'
+                    }
+                ],
+                extensionsFolder: extensionsFolder,
+                printUrl: geoServerPublicLocation + 'pdf/info.json',
+                bingApiKey: '{% bing_api_key %}',
+                mapboxAccessToken: '{{ MAPBOX_ACCESS_TOKEN }}',
+                geoNodeApi: {
+                    endpointV1: siteUrl + 'api',
+                    endpointV2: siteUrl + 'api/v2'
+                },
+                projectionDefs: projectionDefs,
+                geoNodeCustomFilters: customFilters,
+                geoNodeCardsMenuItems: cardsMenuItems,
+                // the properties inside geoNodeSettings are stored in the state
+                // and accessible by the monitored state with state('settings')
+                geoNodeSettings: {
+                    catalogueSelectedService: catalogueSelectedService,
+                    catalogueServices: catalogueServices,
+                    createLayer: createLayer,
+                    geonodeUrl: siteUrl,
+                    geoserverUrl: geoServerPublicLocation,
+                    siteName: siteName,
+                    defaultTileSize: defaultTileSize,
+                    defaultLayerFormat: defaultLayerFormat,
+                    timeEnabled: timeEnabled,
+                    allowedDocumentTypes: allowedDocumentTypes,
+                    isMobile: isMobile,
+                    datasetMaxUploadSize: datasetMaxUploadSize,
+                    documentMaxUploadSize: documentMaxUploadSize,
+                    maxParallelUploads: maxParallelUploads,
+                    defaultThumbnailSize: defaultThumbnailSize,
+                    upload: { 
+                        supportedDatasetFileTypes: supportedDatasetFileTypes
+                    }
+                }
+            }, 
+        };
+
+        // override maps configuration with properties from setting.py
+        window.overrideNewMapConfig = function(config) {
+            if (config && config.map && config.map.layers) {
+                config.map.layers.push(...baseLayers);
+            }
+            config.map.sources = baseLayersSources;
+            config.map.projection = defaultMapCRS;
+            config.map.center = {
+                x: defaultMapCenterX,
+                y: defaultMapCenterY,
+                crs: defaultMapCRS
+            };
+            config.map.zoom = defaultMapZoom;
+
+            config.catalogServices = config.catalogServices || { services: {} };
+            if (catalogueServices) {
+                config.catalogServices.services = Object.assign(config.catalogServices.services || {}, catalogueServices);
+            }
+            if (catalogueSelectedService) {
+                config.catalogServices.selectedService = catalogueSelectedService;
+            }
+            return config;
+        };
+
+        // override new geostory configuration
+        // window.overrideNewGeoStoryConfig = function(config) { return config; };
+
+    })();
+</script>
+{% block override_local_config %}
+{% comment %}
+<script>
+    window.__GEONODE_CONFIG__.overrideLocalConfig = function(localConfig, _) {
+        /*
+        _ is a subset of lodash and contains following functions
+        {
+            mergeWith,
+            merge,
+            isArray,
+            isString,
+            isObject,
+            castArray,
+            get
+        }
+        */
+        return _.mergeWith(localConfig, {
+            // ...my override config
+        }, function(objValue, srcValue, key) {
+            if (_.isArray(objValue)) {
+                return srcValue;
+            }
+            // supportedLocales is an object so it's merged with the default one
+            // so to remove the default languages we should take only the supportedLocales from override
+            if (key === 'supportedLocales') {
+                return srcValue;
+            }
+        });
+    };
+</script>
+{% endcomment %}
+{% endblock %}

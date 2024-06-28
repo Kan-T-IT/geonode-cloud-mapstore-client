@@ -1,0 +1,109 @@
+{% load static %}
+{% load client_version %}
+<!DOCTYPE html>
+<html class="msgapi">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/fonts/montserrat.css" rel="stylesheet">
+        <link href="{% static 'mapstore/dist/themes/geonode.css' %}?{% client_version %}" rel="stylesheet" />
+        <title>{{ SITE_NAME }}</title>
+        <link rel="shortcut icon" href="{% static 'geonode/img/favicon.ico' %}" />
+        {% include './geonode-mapstore-client/snippets/loader_style.html' %}
+
+        {% block custom_theme %}
+            {% include './geonode-mapstore-client/snippets/custom_theme.html' %}
+        {% endblock %}
+
+        {% block extra_style %}
+        {% endblock %}
+
+        {% block extra_head %}
+        {% endblock %}
+    </head>
+    <body class="msgapi ms2" data-ms2-container="ms2">
+        <div class="gn-page-wrapper {% if request.user_agent.is_mobile %}gn-mobile{% else %}gn-desktop{% endif %}">
+            <div class="gn-theme gn-homepage">
+                {% include './geonode-mapstore-client/_geonode_config.html' %}
+                {% block header %}
+                    {% include './geonode-mapstore-client/snippets/header.html' with show_hero=True %}
+                {% endblock %}
+    
+                {% block content %}
+                    {% comment %}
+                    <!-- example of content extension -->
+                    <div class="gn-container">
+                        <div class="gn-content">
+                            <!-- My custom content -->
+                        </div>
+                    </div>
+                    {% endcomment %}
+                    <div class="gn-container">
+                        <div id="gn-home-featured-resources-grid"></div>
+                        <div id="gn-home-resources-grid"></div>
+                    </div>
+                {% endblock %}
+    
+                {% block container %}
+                    <div id="ms-container">
+                        <div class="gn-main-event-container">
+                            <div class="gn-main-event-content">
+                                <div class="gn-main-loader"></div>
+                                <div class="gn-main-event-text"></div>
+                            </div>
+                        </div>
+                    </div>
+                {% endblock %}
+
+                <script>
+                    window.addEventListener('mapstore:ready', function(event) {
+                        const msAPI = event.detail;
+                        msAPI.setPluginsConfig([
+                            {
+                                name: 'FeaturedResourcesGrid',
+                                cfg: {
+                                    targetSelector: '#gn-home-featured-resources-grid',
+                                    pagePath: '/catalogue/'
+                                }
+                            },
+                            {
+                                name: 'ResourcesGrid',
+                                cfg: {
+                                    targetSelector: '#gn-home-resources-grid',
+                                    containerSelector: '#gn-home-resources-grid',
+                                    pagination: false,
+                                    pagePath: '/catalogue/',
+                                    disableFilters: true,
+                                    disableDetailPanel: true,
+                                    enableGeoNodeCardsMenuItems: true
+                                }
+                            },
+                            { name: 'SaveAs', cfg: { closeOnSave: true } },
+                            { name: 'DeleteResource' },
+                            { name: 'DownloadResource' },
+                            { name: 'Notifications' }
+                        ]);
+                    });
+                </script>
+    
+                {% block ms_scripts %}
+                    <script id="gn-script" src="{% static 'mapstore/dist/js/gn-components.js' %}?{% client_version %}"></script>
+                {% endblock %}
+    
+                {% block footer %}
+                    {% include './geonode-mapstore-client/snippets/footer.html' %}
+                {% endblock %}
+    
+                {% block scripts %}
+                    <script src="{% static "lib/js/jquery.min.js" %}"></script>
+                    <script src="{% static "lib/js/bootstrap.min.js" %}"></script>
+                    <script type="text/javascript">
+                        // enable dropdown functionalities
+                        $('.dropdown-toggle').dropdown();
+                    </script>
+                {% endblock %}
+            </div>
+        </div>
+    </body>
+</html>

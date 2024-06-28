@@ -1,0 +1,26 @@
+//
+// Copyright 2020, GeoSolutions Sas.
+// All rights reserved.
+//
+// This source code is licensed under the BSD-style license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+.box-shadow-var(@var; @important: false;) {
+    @value: extract(@var, 1);
+    @fallback: extract(@var, 2);
+    box-shadow: 0 0 0 0.2rem @fallback if(@important, ~'!important', );
+    box-shadow: 0 0 0 0.2rem var(@value, @fallback) if(@important, ~'!important', );
+}
+
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
+}
+
+.shadow {
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+}
+
+.shadow-lg {
+    box-shadow: 0 1rem 3rem rgb(0 0 0 / 18%);
+}

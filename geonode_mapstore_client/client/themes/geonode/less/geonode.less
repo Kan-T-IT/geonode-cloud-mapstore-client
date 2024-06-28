@@ -1,0 +1,45 @@
+@import '~bootstrap/less/bootstrap.less';
+@import 'geonode-legacy.less';
+@import 'ms-theme.less';
+@import '_base.less';
+
+@import '_card-grid.less';
+@import '_datasets-catalog.less';
+@import '_details-panel.less';
+@import '_filter-by-extent.less';
+@import '_filter-form.less';
+@import '_footer.less';
+@import '_hero.less';
+@import '_layer-settings.less';
+@import '_legend.less';
+@import '_loader.less';
+@import '_main-event.less';
+@import '_menu.less';
+@import '_resource-card.less';
+@import '_resources-grid.less';
+@import '_search-bar.less';
+@import '_share.less';
+@import '_spinner.less';
+@import '_home-container.less';
+@import '_sub-flat-menu.less';
+@import '_upload.less';
+@import '_visual-style-editor.less';
+@import 'processTable.less';
+@import 'geoprocessesForm.less';
+@import '_mixins.less';
+@import '_bootstrap-variables.less';
+@import '_variables.less';
+@import '_media-viewer.less';
+@import 'login.less';
+
+@import '~font-awesome/css/font-awesome.min.css';
+@import '~ol/ol.css';
+
+:root {
+    font-size: 16px;
+}
+
+// compose theme based on mapstore and custom components
+.write-ms-theme(@gn-theme-vars);
+#gn-base-components-theme(@gn-theme-vars);
+#gn-components-theme(@gn-theme-vars);

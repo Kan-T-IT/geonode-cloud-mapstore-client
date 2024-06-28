@@ -1,0 +1,20 @@
+version: "3.6"
+services:
+  map:
+    image: geonode-mapstore-client-map:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8081
+    container_name: mapstore
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./http.js:/etc/nginx/http.js
+      - geonode-nginxcerts:/geonode-certificates
+
+volumes:
+  geonode-nginxcerts:
+    name: geonode-nginxcerts
+    external: true

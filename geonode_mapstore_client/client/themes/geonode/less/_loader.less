@@ -1,0 +1,39 @@
+
+
+// **************
+// Theme
+// **************
+
+#gn-components-theme(@theme-vars) {
+    .gn-loader-placeholder {
+        .color-var(@theme-vars[image-color]);
+        .background-color-var(@theme-vars[image-bg]);
+        .fa {
+            .color-var(@theme-vars[main-bg]);
+        }
+    }
+}
+
+// **************
+// Layout
+// **************
+
+@gn-loader-placeholder-bg: 251, 251, 251;
+.gn-loader-placeholder {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    .fa {
+        font-size: 6rem;
+    }
+    &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: -45%;
+        height: 100%;
+        width: 45%;
+        mix-blend-mode: overlay;
+    }
+}

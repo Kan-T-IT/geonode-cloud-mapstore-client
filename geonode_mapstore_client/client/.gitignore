@@ -1,0 +1,13 @@
+MapStore2
+debug.log
+node_modules/
+node_modules/.staging/
+web/
+dist/
+module/
+coverage/
+package-lock.json
+yarn.lock
+*.code-workspace
+docs/
+.env
