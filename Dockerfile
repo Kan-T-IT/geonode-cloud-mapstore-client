@@ -8,7 +8,6 @@ WORKDIR /app
 
 # App files
 COPY . /app
-RUN git submodule update --init --recursive
 
 # install node modules
 WORKDIR /app/geonode_mapstore_client/client
