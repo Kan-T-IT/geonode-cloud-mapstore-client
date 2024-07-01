@@ -11,6 +11,7 @@ COPY . /app
 
 # install node modules
 WORKDIR /app/geonode_mapstore_client/client
+RUN git clone -b 2022.02.xx https://github.com/geosolutions-it/MapStore2.git MapStore2
 RUN npm install --legacy-peer-deps
 
 # compile for development
