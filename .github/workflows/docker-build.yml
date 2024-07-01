@@ -10,14 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          submodules: true
-          fetch-depth: 0  
-      - name: Prepare repository for Docker build
-           run: |
-             git submodule update --init --recursive
-      - name: Log in to Docker Hub
+          uses: actions/checkout@v2
+          with:
+            submodules: recursive
+            fetch-depth: 0  
+        - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ vars.DOCKER_USER }}
