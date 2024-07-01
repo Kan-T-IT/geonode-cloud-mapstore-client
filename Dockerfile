@@ -8,10 +8,10 @@ WORKDIR /app
 
 # App files
 COPY . /app
+RUN git submodule update --init --recursive
 
 # install node modules
 WORKDIR /app/geonode_mapstore_client/client
-RUN git submodule update --init --recursive
 RUN npm install --legacy-peer-deps
 
 # compile for development
