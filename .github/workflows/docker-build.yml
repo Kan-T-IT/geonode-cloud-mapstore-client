@@ -19,7 +19,7 @@ jobs:
         with:
           version: "lab:latest"
           driver: cloud
-          endpoint: "kantit/default"
+          endpoint: "kantit/geonode-cloud-mapstore-client"
           install: true
       - name: Build and push
         uses: docker/build-push-action@v6
