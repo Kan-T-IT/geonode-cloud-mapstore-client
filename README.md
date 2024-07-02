@@ -1,22 +1,17 @@
 # GeoNode MapStore Client
 
-## Iniciar Mapstore
+## Start Mapstore
 
-Luego de clonar este repositorio, debe clonar el submodulo Mapstore2 con el siguiente comando en el root del proyecto:
+After clone, we need to clone Mapstore2 submodule using:
 
 ```shell
 git submodule update --init --recursive
 ```
 
-Una vez hecho esto ya podremos levantar el mapstore client
+Then we can start thhe servise using 
 
-![Build Status](https://github.com/GeoNode/geonode-mapstore-client/actions/workflows/build.yml/badge.svg)
-
-![Build Status](https://github.com/GeoNode/geonode-mapstore-client/actions/workflows/test.yml/badge.svg)
+```shell
+docker compose up -d
+```
 
 GeoNode MapStore Client is a frontend application that interacts with the GeoNode API V2 to allows users to navigate and discover GeoNode resources. The client application provided by this repository is a MapStore downstream project an Open Source WebGIS framework based on ReactJS. 
-
-## Tools supported versions
-
-- node >= v12.18.4
-- npm >= 6.14.6 and < 7
