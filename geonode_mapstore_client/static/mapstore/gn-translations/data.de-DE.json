@@ -136,7 +136,8 @@
             "filter": "Filter",
             "noPreview": "Für diese Ressource ist keine Vorschau verfügbar",
             "na": "n.a.",
-            "emptyAccordion": "Keine Elemente zum Anzeigen"
+            "emptyFilterItems": "Keine Elemente zum Anzeigen",
+            "loadingItems": "Artikel werden geladen..."
         },
         "viewer": {
             "document": {
@@ -157,6 +158,7 @@
             "view": "Anzeigen",
             "viewMetadata": "Metadaten anzeigen",
             "viewData":  "Daten anzeigen",
+            "viewInfo": "Informationen anzeigen",
             "backToDataset": "< Zurück zum Datensatz",
             "goBackTo": "< Geh zurück zu { resourceName }",
             "uploadImage": "Klicken Sie hier, um ein Bild hochzuladen",
@@ -272,6 +274,9 @@
             "invalidUploadMessageErrorTooltip": "Der Upload-Vorgang ist fehlgeschlagen. Bitte überprüfen Sie die Gültigkeit der Datei und versuchen Sie erneut, sie hochzuladen",
             "completeUpload": "Schließen Sie den Upload ab",
             "selectFiles": "Dateien auswählen...",
+            "addUrl": "URL hinzufügen...",
+            "duplicateUrl": "Diese URL ist bereits in der Liste der Uploads vorhanden",
+            "unsupportedUrlExtension": "Erweiterung wird nicht unterstützt",
             "supportedFiles": "Unterstützte Dateierweiterungen",
             "unsupportedFiles": "Für den Upload nicht unterstützte Dateien",
             "upload": "Hochladen",
@@ -331,12 +336,29 @@
             "abstract": "Zusammenfassung",
             "readMore": "Weiterlesen",
             "readLess": "Weniger lesen",
-            "linkedResources": "Verknüpfte Ressourcen",
+            "linkedResources": {
+                "label": "Verknüpfte Ressourcen",
+                "linkedBy": "Verbunden von",
+                "linkedTo": "Verbunden mit",
+                "uses": "Verwendet",
+                "usedBy": "Benutzt von"
+            },
             "extent": "Ausmaß",
             "dateFilter": {
                 "from": "Datum von",
                 "to": "Datum bis"
-            }
+            },
+            "sourceType": "Quelle",
+            "locations": "Ort",
+            "boundingBox": "Begrenzungsrahmen (WGS84)",
+            "center": "Center (WGS84)",
+            "minLat": "Min Lat",
+            "minLon": "Min Lon",
+            "maxLat": "Max Lat",
+            "maxLon": "Max Lon",
+            "centerLat": "Lat",
+            "centerLon": "Lon",
+            "mapExtentHelpText": "<b>Sie können die Ausdehnung und Position dieser Ressource bearbeiten</b>. Shift-Klick und ziehen Sie, um eine neue Ausdehnung zu zeichnen, klicken Sie auf die Markierung und klicken und ziehen Sie dann, um ihre Position festzulegen"
         }
     }
 }

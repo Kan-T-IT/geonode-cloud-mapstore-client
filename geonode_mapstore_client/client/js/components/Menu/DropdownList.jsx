@@ -51,6 +51,7 @@ const itemsList = (items) => (items && items.map((item) => {
  * @prop {string} toogleIcon icon to apply to toogle comp
  * @prop {string} dropdownClass the css class to apply to the comp
  * @prop {number} tabIndex define navigation order
+ * @prop {boolean} noCaret hide/show caret icon on the dropdown
  * @prop {number} badgeValue to apply the value to the item in list
  * @prop {node} containerNode the node to append the child element into a DOM
  * @example
@@ -63,6 +64,7 @@ const itemsList = (items) => (items && items.map((item) => {
  *           toogleImage={image}
  *           toogleIcon={icon}
  *           state={state}
+ *           noCaret={noCaret}
  *           dropdownClass={classItem}
  *           tabIndex={tabIndex}
  *           badgeValue={badgeValue}
@@ -85,6 +87,7 @@ const DropdownList = ({
     badgeValue,
     containerNode,
     size,
+    noCaret,
     alignRight,
     variant,
     responsive
@@ -127,7 +130,7 @@ const DropdownList = ({
             tabIndex={tabIndex}
             style={toogleStyle}
             bsSize={size}
-            noCaret
+            noCaret={noCaret}
         >
             {toogleImage
                 ? <img src={toogleImage} />
@@ -180,6 +183,7 @@ DropdownList.propTypes = {
     toogleStyle: PropTypes.object,
     toogleImage: PropTypes.string,
     state: PropTypes.object,
+    noCaret: PropTypes.bool,
     dropdownClass: PropTypes.string,
     tabIndex: PropTypes.number,
     badgeValue: PropTypes.number,

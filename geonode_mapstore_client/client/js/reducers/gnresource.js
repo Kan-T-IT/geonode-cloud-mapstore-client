@@ -29,7 +29,8 @@ import {
     SET_RESOURCE_COMPACT_PERMISSIONS,
     UPDATE_RESOURCE_COMPACT_PERMISSIONS,
     RESET_GEO_LIMITS,
-    ENABLE_MAP_THUMBNAIL_VIEWER
+    ENABLE_MAP_THUMBNAIL_VIEWER,
+    SET_RESOURCE_EXTENT
 } from '@js/actions/gnresource';
 import {
     cleanCompactPermissions,
@@ -214,6 +215,17 @@ function gnresource(state = defaultState, action) {
             };
         }
         return state;
+    case SET_RESOURCE_EXTENT:
+        return {
+            ...state,
+            data: {
+                ...state.data,
+                extent: {
+                    ...state.data?.extent,
+                    coords: action.coords
+                }
+            }
+        };
     default:
         return state;
     }

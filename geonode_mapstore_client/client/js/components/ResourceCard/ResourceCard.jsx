@@ -112,7 +112,7 @@ const ResourceCard = forwardRef(({
                                             readOnly={readOnly}
                                             href={formatHref({
                                                 query: {
-                                                    'filter{resource_type.in}':
+                                                    'f':
                                                     res.resource_type
                                                 }
                                             })}

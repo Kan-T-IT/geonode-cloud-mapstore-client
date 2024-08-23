@@ -34,6 +34,7 @@ export const ENABLE_MAP_THUMBNAIL_VIEWER = 'GEONODE_ENABLE_MAP_THUMBNAIL_VIEWER'
 export const DOWNLOAD_RESOURCE = 'GEONODE_DOWNLOAD_RESOURCE';
 export const DOWNLOAD_COMPLETE = 'GEONODE_DOWNLOAD_COMPLETE';
 export const UPDATE_SINGLE_RESOURCE = 'GEONODE_UPDATE_SINGLE_RESOURCE';
+export const SET_RESOURCE_EXTENT = 'GEONODE_SET_RESOURCE_EXTENT';
 
 
 /**
@@ -309,5 +310,12 @@ export function downloadComplete(resource) {
     return {
         type: DOWNLOAD_COMPLETE,
         resource
+    };
+}
+
+export function setResourceExtent(coords) {
+    return {
+        type: SET_RESOURCE_EXTENT,
+        coords
     };
 }

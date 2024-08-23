@@ -10,17 +10,20 @@ const staticPath = '../static/mapstore';
 const distDirectory = 'dist';
 
 // remove unused compiled directories
-//['bootstrap', 'ms-configs'].forEach(directoryName => {
-//    const directoryPath = path.resolve(appDirectory, distDirectory, directoryName);
-//    rimraf.sync(directoryPath);
-//    message.title(`removed ${directoryPath}`);
-//});
+['bootstrap', 'ms-configs'].forEach(directoryName => {
+    const directoryPath = path.resolve(appDirectory, distDirectory, directoryName);
+    rimraf.sync(directoryPath);
+    message.title(`removed ${directoryPath}`);
+});
 
 // copy compiled files
+fs.copySync(path.resolve(appDirectory, 'node_modules', 'web-ifc'), path.resolve(appDirectory, distDirectory, 'js', 'web-ifc'));
+message.title('copy ifc files in dist folder');
 fs.moveSync(path.resolve(appDirectory, distDirectory, 'ms-translations'), path.resolve(appDirectory, staticPath, 'ms-translations'), { overwrite: true });
 message.title('copy ms-translations from MapStore Core');
 fs.moveSync(path.resolve(appDirectory, distDirectory), path.resolve(appDirectory, staticPath, distDirectory), { overwrite: true });
 message.title('copy dist folder to static/mapstore directory');
+
 
 // create new version file
 const versionString = `${name}-v${version}-${commit}`;

@@ -35,6 +35,7 @@ import { setViewer } from '@mapstore/framework/utils/MapInfoUtils';
 // we need this configuration set for specific components that use recompose/rxjs streams
 import { setObservableConfig } from 'recompose';
 import rxjsConfig from 'recompose/rxjsObservableConfig';
+import { getGeoNodeConfig, getGeoNodeLocalConfig } from "@js/utils/APIUtils";
 setObservableConfig(rxjsConfig);
 
 let actionListeners = {};
@@ -96,6 +97,10 @@ export function initializeApp() {
             return config;
         }
     );
+    // Set proxy and authentication from geonode config
+    ['proxyUrl', 'useAuthenticationRules', 'authenticationRules'].forEach(key=> {
+        setConfigProp(key, getGeoNodeLocalConfig(key));
+    });
 }
 
 export function getPluginsConfiguration(pluginsConfig, key) {
@@ -176,7 +181,7 @@ export function setupConfiguration({
         supportedLocales: defaultSupportedLocales,
         ...config
     } = localConfig;
-    const geoNodePageConfig = window.__GEONODE_CONFIG__ || {};
+    const geoNodePageConfig = getGeoNodeConfig();
     Object.keys(config).forEach((key) => {
         setConfigProp(key, config[key]);
     });

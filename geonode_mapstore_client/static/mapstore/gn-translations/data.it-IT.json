@@ -41,7 +41,7 @@
             "people": "Utenti",
             "groups": "Gruppi",
             "groupsCategories": "Categorie gruppo",
-            "view": "View",
+            "view": "Visualizza",
             "viewDataset": "Visualizza dataset",
             "viewDatasets": "Visualizzare i set di dati",
             "viewMap": "Visualizza mappa",
@@ -138,7 +138,8 @@
             "filter": "Filtra",
             "noPreview": "Un'anteprima non è disponibile per questa risorsa",
             "na": "N/D",
-            "emptyAccordion": "Nessun elemento da visualizzare"
+            "emptyFilterItems": "Nessun elemento da visualizzare",
+            "loadingItems": "Caricamento elementi..."
         },
         "viewer": {
             "document": {
@@ -155,6 +156,7 @@
             "view": "Visualizza",
             "viewMetadata": "Visualizza i metadati",
             "viewData": "Visualizza i dati",
+            "viewInfo": "Visualizza informazioni",
             "editInfo": "Modifica informazioni",
             "editStyle": "Modifica Stile",
             "editLayerStyle": "Modifica lo stile del dataset",
@@ -274,7 +276,10 @@
             "invalidUploadMessageErrorTooltip": "Il processo di caricamento non è riuscito. Controlla la validità del file e prova a caricarlo di nuovo",
             "completeUpload": "Completa il caricamento",
             "selectFiles": "Seleziona file...",
-            "supportedFiles": "Estensioni di file supportate",
+            "addUrl": "Aggiungi URL...",
+            "duplicateUrl": "Questo URL è già presente nell'elenco dei caricamenti",
+            "unsupportedUrlExtension": "L'estensione non è supportata",
+            "supportedFiles": "Estensioni supportate",
             "unsupportedFiles": "File non supportati per il caricamento",
             "upload": "Carica",
 
@@ -333,12 +338,29 @@
             "abstract": "Astratto",
             "readMore": "Leggi di più",
             "readLess": "Leggi di meno",
-            "linkedResources": "Risorse collegate",
+            "linkedResources": {
+                "label": "Risorse collegate",
+                "linkedBy": "Collegato da",
+                "linkedTo": "Collegato a",
+                "uses": "Usi",
+                "usedBy": "Usato da"
+            },
             "extent": "Estensione",
             "dateFilter": {
                 "from": "Data da",
                 "to": "Data a"
-            }
+            },
+            "sourceType": "Fonte",
+            "locations": "Posizione geografica",
+            "boundingBox": "Rettangolo di selezione (WGS84)",
+            "center": "Centro (WGS84)",
+            "minLat": "Min Lat",
+            "minLon": "Min Lon",
+            "maxLat": "Max Lat",
+            "maxLon": "Max Lon",
+            "centerLat": "Lat",
+            "centerLon": "Lon",
+            "mapExtentHelpText": "<b>Puoi modificare l'estensione e la posizione di questa risorsa</b>. Shift-clic e trascina per disegnare una nuova estensione, fare clic sul marcatore, quindi fare clic e trascinare per impostarne la posizione"
         }
     }
 }

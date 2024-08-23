@@ -62,10 +62,6 @@ const toModulePlugin = (...args) => {
 };
 
 export const plugins = {
-    GpStatePlugin: toModulePlugin(
-        'GpState',
-        () => import(/* webpackChunkName: 'plugins/fit-bounds-plugin' */ '@js/plugins/GpState')
-    ),
     LayerDownloadPlugin: toModulePlugin(
         'LayerDownload',
         () => import(/* webpackChunkName: 'plugins/layer-download' */ '@mapstore/framework/plugins/LayerDownload'),
@@ -351,10 +347,6 @@ export const plugins = {
     FitBoundsPlugin: toModulePlugin(
         'FitBounds',
         () => import(/* webpackChunkName: 'plugins/fit-bounds-plugin' */ '@js/plugins/FitBounds')
-    ),
-    FormPlugin: toModulePlugin(
-        'Form',
-        () => import(/* webpackChunkName: 'plugins/fit-bounds-plugin' */ '@js/plugins/GeoprocessForm')
     ),
     DashboardEditorPlugin: toModulePlugin(
         'DashboardEditor',

@@ -1,31 +1,12 @@
-FROM node:16-alpine AS builder
+FROM node:20.16.0
 
-RUN apk update
-RUN apk add git
+COPY ./ /geonode-mapstore-client
+WORKDIR /geonode-mapstore-client/geonode_mapstore_client/client/
 
-# Set working directory
-WORKDIR /app
+RUN cp .env.sample .env
 
-# App files
-COPY . /app
-RUN git submodule update --init --recursive
-
-# install node modules
-WORKDIR /app/geonode_mapstore_client/client
+ENV NODE_OPTIONS=--openssl-legacy-provider
+RUN npm update
 RUN npm install --legacy-peer-deps
 
-# compile for development
-RUN npm run compile
-
-### 2) Publish
-# nginx is serving the frontend site
-FROM nginx:1.25.3-alpine
-
-COPY ./geonodestatics/static /usr/share/nginx/html/static
-
-COPY --from=builder /app/geonode_mapstore_client/static/fonts /usr/share/nginx/html/static/fonts
-COPY --from=builder /app/geonode_mapstore_client/static/mapstore /usr/share/nginx/html/static/mapstore
-COPY --from=builder /app/geonode_mapstore_client/static/mapstorestyle /usr/share/nginx/html/static/mapstorestyle
-
 EXPOSE 8081
-CMD ["nginx", "-g", "daemon off;"]

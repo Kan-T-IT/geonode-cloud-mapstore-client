@@ -136,7 +136,8 @@
             "filter": "Filtre",
             "noPreview": "Un aperçu n'est pas disponible pour cette ressource",
             "na": "N/A",
-            "emptyAccordion": "Aucun élément à afficher"
+            "emptyFilterItems": "Aucun élément à afficher",
+            "loadingItems": "Chargement des éléments..."
         },
         "viewer": {
             "document": {
@@ -153,6 +154,7 @@
             "view": "Vue",
             "viewMetadata": "Afficher les métadonnées",
             "viewData":  "Afficher les données",
+            "viewInfo": "Afficher les informations",
             "editInfo": "Modifier les informations",
             "editStyle": "Modifier le Style",
             "editLayerStyle": "Modifier le style de jeu de données",
@@ -272,6 +274,9 @@
             "invalidUploadMessageErrorTooltip": "Le processus de téléchargement a échoué. Veuillez vérifier la validité du fichier et réessayez de le télécharger",
             "completeUpload": "Terminer le téléchargement",
             "selectFiles": "Sélectionner les fichiers...",
+            "addUrl": "Ajouter l'URL...",
+            "duplicateUrl": "Cette URL est déjà présente dans la liste des téléchargements",
+            "unsupportedUrlExtension": "L'extension n'est pas prise en charge",
             "supportedFiles": "Extensions de fichiers prises en charge",
             "unsupportedFiles": "Fichiers non pris en charge pour le téléchargement",
             "upload": "Télécharger",
@@ -331,12 +336,29 @@
             "abstract": "Résumé",
             "readMore": "En savoir plus",
             "readLess": "Lire moins",
-            "linkedResources": "Ressources liées",
+            "linkedResources": {
+                "label": "Ressources liées",
+                "linkedBy": "Lié par",
+                "linkedTo": "Lié à",
+                "uses": "Les usages",
+                "usedBy": "Utilisé par"
+            },
             "extent": "Étendue",
             "dateFilter": {
                 "from": "Date de",
                 "to": "Date à"
-            }
+            },
+            "sourceType": "Source",
+            "locations": "Localisation",
+            "boundingBox": "Boîte englobante (WGS84)",
+            "center": "Centre (WGS84)",
+            "minLat": "Min Lat",
+            "minLon": "Min Lon",
+            "maxLat": "Max Lat",
+            "maxLon": "Max Lon",
+            "centerLat": "Lat",
+            "centerLon": "Lon",
+            "mapExtentHelpText": "<b>Vous pouvez modifier l'étendue et la position de cette ressource</b>. Shift-clic et faites glisser pour dessiner une nouvelle étendue, cliquez sur le marqueur puis cliquez et faites glisser pour définir sa position"
         }
     }
 }

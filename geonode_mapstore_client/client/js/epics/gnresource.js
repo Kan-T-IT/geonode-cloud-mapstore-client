@@ -62,13 +62,15 @@ import {
 import {
     setControlProperty,
     resetControls,
-    SET_CONTROL_PROPERTY
+    SET_CONTROL_PROPERTY,
+    setControlProperties
 } from '@mapstore/framework/actions/controls';
 import {
     resourceToLayerConfig,
     ResourceTypes,
     toMapStoreMapConfig,
-    parseStyleName
+    parseStyleName,
+    getCataloguePath
 } from '@js/utils/ResourceUtils';
 import {
     canAddResource,
@@ -219,7 +221,8 @@ const resourceTypes = {
                             }
                             : mapConfig),
                         ...(extent
-                            ? [ setControlProperty('fitBounds', 'geometry', extent) ]
+                            // Add duration to allow map config to be properly updated with zoom on fitBounds action
+                            ? [ setControlProperties('fitBounds', 'geometry', extent, "duration", 400) ]
                             : []),
                         setControlProperty('toolbar', 'expanded', false)
                     );
@@ -322,7 +325,7 @@ export const gnViewerRequestNewResourceConfig = (action$, store) =>
                     ...window.location,
                     pathname: '/account/login/',
                     hash: '',
-                    search: `?next=/catalogue`
+                    search: `?next=${getCataloguePath('/catalogue')}`
                 });
                 window.location.href = formattedUrl;
                 window.reload();

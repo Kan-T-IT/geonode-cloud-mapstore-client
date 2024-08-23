@@ -26,6 +26,7 @@
   "author": "GeoSolutions",
   "license": "BSD-2-Clause",
   "devDependencies": {
+    "@babel/traverse": "7.22.5",
     "@mapstore/project": "1.0.25",
     "dotenv": "10.0.0",
     "jsdoc": "4.0.0"
@@ -41,7 +42,7 @@
     "react-intl": "2.3.0",
     "three": "0.138.3",
     "three-stdlib": "2.8.9",
-    "formik": "^2.4.5"
+    "web-ifc-three": "0.0.125"
   },
   "mapstore": {
     "output": "dist",

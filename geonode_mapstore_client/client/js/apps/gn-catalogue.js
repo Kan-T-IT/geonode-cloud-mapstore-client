@@ -111,119 +111,120 @@ const routes = CATALOGUE_ROUTES.map(({ component, ...config }) => ({ ...config, 
 
 initializeApp();
 
-Promise.all([
-    getConfiguration(),
-    getAccountInfo(),
-    getEndpoints()
-])
-    .then(([localConfig, user]) => {
-        setupConfiguration({
-            localConfig,
-            user
-        })
-            .then(({
-                securityState,
-                geoNodeConfiguration,
-                pluginsConfigKey,
-                query,
-                configEpics,
-                mapType = 'openlayers',
-                onStoreInit,
-                targetId = 'ms-container',
-                settings
-            }) => {
+getEndpoints()
+    .then(()=> Promise.all([
+        getConfiguration(),
+        getAccountInfo()
+    ])
+        .then(([localConfig, user]) => {
+            setupConfiguration({
+                localConfig,
+                user
+            })
+                .then(({
+                    securityState,
+                    geoNodeConfiguration,
+                    pluginsConfigKey,
+                    query,
+                    configEpics,
+                    mapType = 'openlayers',
+                    onStoreInit,
+                    targetId = 'ms-container',
+                    settings
+                }) => {
                 // get the correct map layout
-                const mapLayout = getConfigProp('mapLayout') || {};
-                setConfigProp('mapLayout', mapLayout[query.theme] || mapLayout.viewer);
+                    const mapLayout = getConfigProp('mapLayout') || {};
+                    setConfigProp('mapLayout', mapLayout[query.theme] || mapLayout.viewer);
 
-                const appEpics = {
-                    ...standardEpics,
-                    ...configEpics,
-                    gnCheckSelectedDatasetPermissions,
-                    gnSetDatasetsPermissions,
-                    ...pluginsDefinition.epics,
-                    ...gnresourceEpics,
-                    ...resourceServiceEpics,
-                    ...gnsearchEpics,
-                    ...favoriteEpics,
-                    updateMapLayoutEpic,
-                    // needed to initialize the correct time range
-                    ...timelineEpics
-                };
+                    const appEpics = {
+                        ...standardEpics,
+                        ...configEpics,
+                        gnCheckSelectedDatasetPermissions,
+                        gnSetDatasetsPermissions,
+                        ...pluginsDefinition.epics,
+                        ...gnresourceEpics,
+                        ...resourceServiceEpics,
+                        ...gnsearchEpics,
+                        ...favoriteEpics,
+                        updateMapLayoutEpic,
+                        // needed to initialize the correct time range
+                        ...timelineEpics
+                    };
 
-                storeEpicsNamesToExclude(appEpics);
+                    storeEpicsNamesToExclude(appEpics);
 
-                // register custom arcgis layer
-                import('@js/map/' + mapType + '/plugins/ArcGisMapServer')
-                    .then(() => {
-                        main({
-                            targetId,
-                            enableExtensions: true,
-                            appComponent: withRoutes(routes)(ConnectedRouter),
-                            loaderComponent: MainLoader,
-                            initialState: {
-                                defaultState: {
-                                    ...securityState,
-                                    maptype: {
-                                        mapType
-                                    },
-                                    annotations: {
-                                        config: {
-                                            multiGeometry: true,
-                                            validationErrors: {}
+                    // register custom arcgis layer
+                    import('@js/map/' + mapType + '/plugins/ArcGisMapServer')
+                        .then(() => {
+                            main({
+                                targetId,
+                                enableExtensions: true,
+                                appComponent: withRoutes(routes)(ConnectedRouter),
+                                loaderComponent: MainLoader,
+                                initialState: {
+                                    defaultState: {
+                                        ...securityState,
+                                        maptype: {
+                                            mapType
                                         },
-                                        defaultTextAnnotation: 'New'
+                                        annotations: {
+                                            config: {
+                                                multiGeometry: true,
+                                                validationErrors: {}
+                                            },
+                                            defaultTextAnnotation: 'New'
+                                        }
                                     }
-                                }
-                            },
-                            themeCfg: null,
-                            pluginsConfig: getPluginsConfigOverride(getPluginsConfiguration(localConfig.plugins, pluginsConfigKey)),
-                            pluginsDef: {
-                                plugins: {
-                                    ...pluginsDefinition.plugins
                                 },
-                                requires: {
-                                    ...requires,
-                                    ...pluginsDefinition.requires
-                                }
-                            },
-                            printEnabled: true,
-                            rootReducerFunc: standardRootReducerFunc,
-                            onStoreInit,
-                            appReducers: {
-                                ...standardReducers,
-                                gnresource,
-                                resourceservice,
-                                gnsettings,
-                                security,
-                                maptype,
-                                print,
-                                maplayout,
-                                controls,
-                                timeline,
-                                dimension,
-                                playback,
-                                mapPopups,
-                                catalog,
-                                searchconfig,
-                                widgets,
-                                geostory,
-                                gnsearch,
-                                annotations,
-                                notifications,
-                                ...pluginsDefinition.reducers
-                            },
-                            appEpics,
-                            geoNodeConfiguration,
-                            initialActions: [
+                                themeCfg: null,
+                                pluginsConfig: getPluginsConfigOverride(getPluginsConfiguration(localConfig.plugins, pluginsConfigKey)),
+                                pluginsDef: {
+                                    plugins: {
+                                        ...pluginsDefinition.plugins
+                                    },
+                                    requires: {
+                                        ...requires,
+                                        ...pluginsDefinition.requires
+                                    }
+                                },
+                                printEnabled: true,
+                                rootReducerFunc: standardRootReducerFunc,
+                                onStoreInit,
+                                appReducers: {
+                                    ...standardReducers,
+                                    gnresource,
+                                    resourceservice,
+                                    gnsettings,
+                                    security,
+                                    maptype,
+                                    print,
+                                    maplayout,
+                                    controls,
+                                    timeline,
+                                    dimension,
+                                    playback,
+                                    mapPopups,
+                                    catalog,
+                                    searchconfig,
+                                    widgets,
+                                    geostory,
+                                    gnsearch,
+                                    annotations,
+                                    notifications,
+                                    ...pluginsDefinition.reducers
+                                },
+                                appEpics,
+                                geoNodeConfiguration,
+                                initialActions: [
                                 // add some settings in the global state to make them accessible in the monitor state
                                 // later we could use expression in localConfig
-                                updateGeoNodeSettings.bind(null, settings),
-                                loadPrintCapabilities.bind(null, getConfigProp('printUrl'))
-                            ]
-                        },
-                        withExtensions(StandardApp));
-                    });
-            });
+                                    updateGeoNodeSettings.bind(null, settings),
+                                    loadPrintCapabilities.bind(null, getConfigProp('printUrl'))
+                                ]
+                            },
+                            withExtensions(StandardApp));
+                        });
+                });
 
-    });
+        })
+    );

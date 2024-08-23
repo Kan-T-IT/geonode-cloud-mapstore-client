@@ -15,7 +15,8 @@ import {
     getResourceThumbnail,
     updatingThumbnailResource,
     isThumbnailChanged,
-    canEditPermissions
+    canEditPermissions,
+    canManageResourcePermissions
 } from '../resource';
 
 const testState = {
@@ -79,5 +80,13 @@ describe('resource selector', () => {
 
     it('should get permissions from users in groups with manage rights', () => {
         expect(canEditPermissions(testState)).toBeTruthy();
+    });
+    it('test manage resource permissions', () => {
+        let state = {...testState};
+        state.gnresource.data.perms = ['change_resourcebase_permissions'];
+        expect(canManageResourcePermissions(state)).toBeTruthy();
+        state.gnresource.data.perms = ['change_resourcebase', 'view_resourcebase'];
+        expect(canManageResourcePermissions(state)).toBeFalsy();
+        state.gnresource.data.perms = undefined;
     });
 });

@@ -136,7 +136,8 @@
             "filter": "Filter",
             "noPreview": "A preview is not available for this resource",
             "na": "N/A",
-            "emptyAccordion": "No items to display"
+            "emptyFilterItems": "No items to display",
+            "loadingItems": "Loading items..."
         },
         "viewer": {
             "document": {
@@ -157,6 +158,7 @@
             "view": "View",
             "viewMetadata": "View Metadata",
             "viewData": "View Data",
+            "viewInfo": "View information",
             "backToDataset": "< Go back to the dataset",
             "goBackTo": "< Go back to { resourceName }",
             "uploadImage": "Click to upload an image",
@@ -272,6 +274,9 @@
             "invalidUploadMessageErrorTooltip": "The upload process failed. Please check the validity of the file and try to upload it again",
             "completeUpload": "Complete the upload",
             "selectFiles": "Select files...",
+            "addUrl": "Add URL...",
+            "duplicateUrl": "This URL is already present in the list of uploads",
+            "unsupportedUrlExtension": "Extension is not supported",
             "supportedFiles": "Supported file extensions",
             "unsupportedFiles": "Files not supported for the upload",
             "upload": "Upload",
@@ -331,12 +336,29 @@
             "abstract": "Abstract",
             "readMore": "Read more",
             "readLess": "Read less",
-            "linkedResources": "Linked Resources",
+            "linkedResources": {
+                "label": "Linked Resources",
+                "linkedBy": "Linked By",
+                "linkedTo": "Linked To",
+                "uses": "Uses",
+                "usedBy": "Used By"
+            },
             "extent": "Extent",
             "dateFilter": {
                 "from": "Date from",
                 "to": "Date to"
-            }
+            },
+            "sourceType": "Source",
+            "locations": "Location",
+            "boundingBox": "Bounding Box (WGS84)",
+            "center": "Center (WGS84)",
+            "minLat": "Min Lat",
+            "minLon": "Min Lon",
+            "maxLat": "Max Lat",
+            "maxLon": "Max Lon",
+            "centerLat": "Lat",
+            "centerLon": "Lon",
+            "mapExtentHelpText": "<b>You can edit the extent and position of this resource</b>. Shift-click and drag to draw a new extent, click on the marker and then click and drag to set its position"
         }
     }
 }

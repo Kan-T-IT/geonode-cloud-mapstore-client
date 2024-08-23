@@ -136,7 +136,8 @@
             "filter": "Filtrar",
             "noPreview": "Una vista previa no está disponible para este recurso",
             "na": "N/A",
-            "emptyAccordion": "No hay elementos para mostrar"
+            "emptyFilterItems": "No hay elementos para mostrar",
+            "loadingItems": "Cargando artículos..."
         },
         "viewer": {
             "document": {
@@ -151,12 +152,13 @@
             "export": "Exportar",
             "editInfo": "Editar información",
             "editMetadata": "Editar Metadatos",
-            "editStyle": "Editar Estilo",            
+            "editStyle": "Editar Estilo",
             "editLayerStyle": "Editar estilo de conjunto de datos",
             "editData": "Editar Datos",
             "view": "Ver",
             "viewMetadata": "Ver metadatos",
             "viewData":  "Ver datos",
+            "viewInfo": "Ver información",
             "backToDataset": "< Regrese al conjunto de datos",
             "goBackTo": "< Volver a { resourceName }",
             "uploadImage": "Haz clic para subir una imagen",
@@ -271,6 +273,9 @@
             "invalidUploadMessageErrorTooltip": "El proceso de carga falló. Verifique la validez del archivo e intente cargarlo nuevamente",
             "completeUpload": "Completa la carga",
             "selectFiles": "Seleccionar archivos...",
+            "addUrl": "Agregar URL...",
+            "duplicateUrl": "Esta URL ya está presente en la lista de subidas",
+            "unsupportedUrlExtension": "La extensión no es compatible",
             "supportedFiles": "Extensiones de archivo admitidas",
             "unsupportedFiles": "Archivos no admitidos para la carga",
             "upload": "Subir",
@@ -330,12 +335,29 @@
             "abstract": "Resumen",
             "readMore": "Leer más",
             "readLess": "Leer menos",
-            "linkedResources": "Recursos vinculados",
+            "linkedResources": {
+                "label": "Recursos vinculados",
+                "linkedBy": "Vinculado por",
+                "linkedTo": "Vinculado a",
+                "uses": "Usos",
+                "usedBy": "Usado por"
+            },
             "extent": "Extensión",
             "dateFilter": {
                 "from": "Fecha desde",
                 "to": "Fecha hasta"
-            }
+            },
+            "sourceType": "Fuente",
+            "locations": "Ubicacion",
+            "boundingBox": "Cuadro delimitador (WGS84)",
+            "center": "Centro (WGS84)",
+            "minLat": "Min Lat",
+            "minLon": "Min Lon",
+            "maxLat": "Max Lat",
+            "maxLon": "Max Lon",
+            "centerLat": "Lat",
+            "centerLon": "Lon",
+            "mapExtentHelpText": "<b>Puedes editar la extensión y posición de este recurso</b>. Shift-clic y arrastre para dibujar una nueva extensión, haga clic en el marcador y luego haga clic y arrastre para establecer su posición"
         }
     }
 }

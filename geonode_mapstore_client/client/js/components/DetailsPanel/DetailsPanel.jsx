@@ -58,7 +58,7 @@ const ResourceMessage = ({ type, pathname, formatHref }) => {
                 href={formatHref({
                     pathname,
                     query: {
-                        'filter{resource_type.in}': type
+                        'f': type
                     }
                 })}
             >
@@ -74,15 +74,14 @@ const DetailsPanelTools = ({
     resource,
     enableFavorite,
     favorite,
-    downloadUrl,
-    onAction,
     onFavorite,
     detailUrl,
     editThumbnail,
     resourceCanPreviewed,
     canView,
     metadataDetailUrl,
-    name
+    name,
+    toolbarItems = []
 }) => {
 
     const isMounted = useRef();
@@ -120,12 +119,9 @@ const DetailsPanelTools = ({
                 onClick={debounce(() => handleFavorite(favorite), 500)}>
                 <FaIcon name={favorite ? 'star' : 'star-o'} />
             </Button>}
-            {downloadUrl &&
-            <Button variant="default"
-                onClick={() => onAction(resource)} >
-                <FaIcon name="download" />
-            </Button>}
-
+            {toolbarItems.map(({ Component, name: toolbarItemName }, index) => {
+                return (<Component key={toolbarItemName || index} showIcon />);
+            })}
             <CopyToClipboard
                 tooltipPosition="top"
                 tooltipId={
@@ -190,10 +186,10 @@ function DetailsPanel({
     initialBbox,
     enableMapViewer,
     onClose,
-    onAction,
-    canDownload,
     tabs,
-    pathname
+    pathname,
+    toolbarItems,
+    onSetExtent
 }) {
     const detailsContainerNode = useRef();
     const [titleNodeRef, titleInView] = useInView();
@@ -212,8 +208,6 @@ function DetailsPanel({
     const detailUrl = resource?.pk && formatDetailUrl(resource);
     const resourceCanPreviewed = resource?.pk && canPreviewed && canPreviewed(resource);
     const canView = resource?.pk && hasPermission && hasPermission(resource);
-    const downloadUrl = (resource?.href && resource?.href.includes('download')) ? resource?.href
-        : (resource?.download_url && canDownload) ? resource?.download_url : undefined;
     const metadataDetailUrl = resource?.pk && getMetadataDetailUrl(resource);
     const tools = (
         <DetailsPanelTools
@@ -221,14 +215,13 @@ function DetailsPanel({
             resource={resource}
             enableFavorite={enableFavorite}
             favorite={favorite}
-            downloadUrl={downloadUrl}
-            onAction={onAction}
             onFavorite={onFavorite}
             detailUrl={detailUrl}
             editThumbnail={editThumbnail}
             resourceCanPreviewed={resourceCanPreviewed}
             canView={canView}
             metadataDetailUrl={metadataDetailUrl}
+            toolbarItems={toolbarItems}
         />
     );
     return (
@@ -298,7 +291,7 @@ function DetailsPanel({
                             : null}
                     </div>
                 </div>
-                <DetailsInfo tabs={tabs} formatHref={formatHref} resourceTypesInfo={types}/>
+                <DetailsInfo tabs={tabs} formatHref={formatHref} allowEdit={activeEditMode} resourceTypesInfo={types} resource={resource} onSetExtent={onSetExtent}/>
             </section>
         </div>
     );
@@ -311,8 +304,7 @@ DetailsPanel.defaultProps = {
     onResourceThumbnail: () => '#',
     width: 696,
     getTypesInfo: getResourceTypesInfo,
-    isThumbnailChanged: false,
-    onAction: () => {}
+    isThumbnailChanged: false
 };
 
 export default DetailsPanel;

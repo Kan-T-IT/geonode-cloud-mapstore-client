@@ -12,7 +12,7 @@ import PdfViewer from '@js/components/MediaViewer/PdfViewer';
 import { determineResourceType } from '@js/utils/FileUtils';
 import Loader from '@mapstore/framework/components/misc/Loader';
 import MainEventView from '@js/components/MainEventView';
-import { getResourceTypesInfo, getResourceImageSource } from '@js/utils/ResourceUtils';
+import { getResourceTypesInfo, getResourceImageSource, isDocumentExternalSource } from '@js/utils/ResourceUtils';
 import MetadataPreview from '@js/components/MetadataPreview';
 
 const Scene3DViewer = lazy(() => import('@js/components/MediaViewer/Scene3DViewer'));
@@ -29,6 +29,7 @@ const mediaMap = {
     pdf: PdfViewer,
     gltf: Scene3DViewer,
     pcd: Scene3DViewer,
+    ifc: Scene3DViewer,
     unsupported: UnsupportedViewer
 };
 
@@ -70,6 +71,7 @@ const Media = ({ resource, ...props }) => {
                 thumbnail={() => getResourceImageSource(resource?.thumbnail_url)}
                 src={resource.href}
                 url={resource ? metadataPreviewUrl(resource) : ''}
+                isExternalSource={isDocumentExternalSource(resource)}
             />
         </Suspense>);
     }
